@@ -4,12 +4,14 @@
     function TaskDAO($resource) {
         var api = $resource('/api/task/:a/:b', null, {
             queryTask: {isArray: false},
+            query: {isArray: false},
             queryBranches: {isArray: true},
             queryTags: {isArray:true}
         });
 
         return {
             queryTask: function (filter) {
+            query: function (filter) {
                 return api.query(filter).$promise;
             },
             queryBranches: function (repoUrl, searchQuery) {
@@ -21,6 +23,11 @@
             save: function (data) {
                 return api.save(data).$promise;
             }
+            },
+            remove: function (id) {
+                return api.remove({a: id}).$promise;
+            }
+
         };
     }
 
